@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/dist/output.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 class="text-center text-2xl font-semibold mt-5">
+        Todo App
+    </h1>
+    <div class="flex justify-center mt-5 ml-2">
+        <div class=" w-[600px] grid grid-cols-3 sm:gap-24 gap-12">
+            <div>
+                <input type="text" placeholder="Enter TODO here"
+                    class="p-1 border-2 border-gray-500 h-[2.4rem] sm:w-full w-32" id="Todo_item">
+            </div>
+            <div>
+                <input type="date" class="p-1 border-2 border-gray-500 sm:w-full w-32" id="todo_date">
+            </div>
+            <div class="mt-1">
+                <button class="bg-green-800 text-white py-1 px-7 rounded-lg mb-7 active:bg-green-950"
+                    onclick="AddTodoItem()">Add</button>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-center">
+        <div id="item_container" class="grid grid-cols-3 sm:gap-x-24 px-5 gap-x-12"></div>
+    </div>
+</body>
+<script type="text/javascript">
+    let todo_list = [
+        {
+            item: "milk",
+            date: "23/09/2025",
+        },
+        {
+            item: "ghee",
+            date: "23/09/2025",
+        },
+    ]
+    display_item();
+
+    const AddTodoItem = () => {
+        let todoitem = document.getElementById("Todo_item").value;
+        let tododate = document.getElementById("todo_date").value;
+        todo_list.push({ item: todoitem, date: tododate });
+        document.getElementById("Todo_item").value = "";
+        document.getElementById("todo_date").value = "";
+        display_item();
+    }
+    function display_item() {
+        let DisplayItem = document.getElementById("item_container");
+        let newHTML = '';
+        for (let i = 0; i < todo_list.length; i++) {
+            let { item, date } = todo_list[i];
+            newHTML += `<span>${item}</span>
+            <span>${date}</span>
+            <button class="bg-red-800 text-white py-1 px-7 rounded-lg mb-7 active:bg-red-950" onclick = "todo_list.splice(${i}, 1); 
+            display_item()">Delete</button> \n`;
+        }
+        DisplayItem.innerHTML = newHTML;
+    }
+</script>
+
+</html>
